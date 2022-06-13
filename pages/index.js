@@ -1,10 +1,34 @@
 import Head from 'next/head'
 import Image from 'next/image'
 
+import React, { useEffect, useState } from "react"
+import cookieCutter from "cookie-cutter"
+
 import Nav from "./../components/Nav"
 import FilterList from "./../components/FilterList"
 
 export default function Home() {
+  const [cartItems, setCartItems] = useState([])
+
+  useEffect(() => {
+    if (!cartItems.length > 0) {
+      var id = cookieCutter.get('cartid')
+
+      if (id !== undefined) {
+        fetch("http://192.168.1.144:3002/carts/" + id)
+          .then(async res => {
+            if (res.status == 401) {
+              // DO SOMETHING, OTHER THAN NOTHING
+            } else {
+              var json = await res.json()                    
+              setCartItems(json.content)
+            }
+          })
+      }
+    }
+    
+  }, [])
+
   return (
     <div>
       <Head>
@@ -13,10 +37,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Nav />
+      <Nav cartItems={cartItems}/>
 
-      <main>
-        <FilterList />
+      <main className="bg-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <FilterList cartItems={cartItems} setCartItems={setCartItems} />
       </main>
     </div>
   )

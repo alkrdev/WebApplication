@@ -1,4 +1,6 @@
-export default function Products({ products }) {
+import cookieCutter from "cookie-cutter"
+
+export default function Products({ products, mainprops }) {
 
     return (
         <div className="bg-white">
@@ -6,7 +8,23 @@ export default function Products({ products }) {
   
                 <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {products.map((product) => (
-                        <div key={product.id} className="group relative hover:bg-green-200 cursor-pointer">
+                        <div key={product.id} className="group relative hover:bg-green-200 cursor-pointer" onClick={() => {
+                            var newContent = [...mainprops.cartItems, product]
+                            
+                            mainprops.setCartItems(newContent)
+                            
+                            console.log(newContent)
+                            var id = cookieCutter.get('cartid')
+                            fetch("http://192.168.1.144:3002/carts/" + id, {
+                                method: "PUT",
+                                headers: {
+                                    "Content-type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    items: newContent
+                                })      
+                            })
+                        }}>
                             <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 overflow-hidden  group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                 <img
                                     src={product.imageSrc}
