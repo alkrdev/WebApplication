@@ -8,10 +8,12 @@ import { v4 as uuidv4 } from 'uuid';
 import Nav from "./../components/Nav"
 import FilterList from "./../components/FilterList"
 
+
+
 export default function Home() {
   const [cartItems, setCartItems] = useState([])
 
-  useEffect(() => {
+  const CreateAndRegisterNewCartID = () => {
     const newUuid = uuidv4();
   
     fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
@@ -27,6 +29,17 @@ export default function Home() {
         cookieCutter.set('cartid', newUuid) 
       }
     })
+  }
+
+
+  useEffect(() => {
+
+    var id = cookieCutter.get('cartid')
+
+    console.log(id)
+    if (!id) {      
+      CreateAndRegisterNewCartID()
+    }
 
     if (!cartItems.length > 0) {
       var id = cookieCutter.get('cartid')
@@ -35,21 +48,7 @@ export default function Home() {
         fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/" + id)
           .then(async res => {
             if (res.status == 401) {
-              const newUuid = uuidv4();
-  
-              fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
-                method: "POST",
-                headers: {
-                  "Content-type": "application/json",
-                },
-                body: JSON.stringify({
-                  id: newUuid
-                })
-              }).then((res) => {
-                if (res.ok) {
-                  cookieCutter.set('cartid', newUuid) 
-                }
-              })
+              CreateAndRegisterNewCartID()
             } else {
               var json = await res.json()                    
               setCartItems(json.content)
@@ -57,21 +56,7 @@ export default function Home() {
           })
       }
     } else {
-      const newUuid = uuidv4();
-  
-      fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          id: newUuid
-        })
-      }).then((res) => {
-        if (res.ok) {
-          cookieCutter.set('cartid', newUuid) 
-        }
-      })
+      CreateAndRegisterNewCartID()
     }
     
   }, [])
