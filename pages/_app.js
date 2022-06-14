@@ -14,8 +14,9 @@ function MyApp({ Component, pageProps }) {
 MyApp.getInitialProps = ({req, res}) => {
   const cookies = new Cookies(req, res)
 
+  var id = cookies.get('cartid')
   
-  if (cookies.get('cartid')) return;
+  if (id) return;
   const newUuid = uuidv4();
 
   console.log("BEFORE FETCHING")
