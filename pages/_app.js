@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }) {
           id: newUuid
         })
       }).then((res) => {
+        console.log("COOKIE SET ATTEMPT")
         if (res.ok) {
           cookieCutter.set('cartid', newUuid) 
         }
