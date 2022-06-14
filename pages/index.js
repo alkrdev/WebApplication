@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React, { useEffect, useState } from "react"
 import cookieCutter from "cookie-cutter"
 import { v4 as uuidv4 } from 'uuid';
+import Cookies from 'cookies'
 
 import Nav from "./../components/Nav"
 import FilterList from "./../components/FilterList"
