@@ -12,6 +12,22 @@ export default function Home() {
   const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
+    const newUuid = uuidv4();
+  
+    fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        id: newUuid
+      })
+    }).then((res) => {
+      if (res.ok) {
+        cookieCutter.set('cartid', newUuid) 
+      }
+    })
+
     if (!cartItems.length > 0) {
       var id = cookieCutter.get('cartid')
 
