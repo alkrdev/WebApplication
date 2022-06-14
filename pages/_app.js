@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
       if (cookieCutter.get('cartid')) return;
       const newUuid = uuidv4();
   
-      fetch("http://192.168.1.144:3002/carts", {
+      fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
