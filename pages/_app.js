@@ -9,26 +9,7 @@ import { useEffect, useState } from 'react';
 function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
-    return () => {
-      if (cookieCutter.get('cartid')) return;
-      const newUuid = uuidv4();
-  
-      console.log("BEFORE FETCHING")
-      fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          id: newUuid
-        })
-      }).then((res) => {
-        console.log("COOKIE SET ATTEMPT")
-        if (res.ok) {
-          cookieCutter.set('cartid', newUuid) 
-        }
-      })
-    }
+    
   
   }, [])
 
