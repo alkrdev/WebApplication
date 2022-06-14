@@ -4,12 +4,11 @@ import Image from 'next/image'
 import React, { useEffect, useState } from "react"
 import cookieCutter from "cookie-cutter"
 import { v4 as uuidv4 } from 'uuid';
-import Cookies from 'cookies'
 
 import Nav from "./../components/Nav"
 import FilterList from "./../components/FilterList"
 
-const Home = () => {
+export default function Home() {
   const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
@@ -61,32 +60,3 @@ const Home = () => {
     </div>
   )
 }
-
-Home.getInitialProps = ({req, res}) => {
-  const cookies = new Cookies(req, res)
-
-  var id = cookies.get('cartid')
-  
-  if (id) return;
-  const newUuid = uuidv4();
-
-  console.log("BEFORE FETCHING")
-  fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({
-      id: newUuid
-    })
-  }).then((res) => {
-    console.log("COOKIE SET ATTEMPT")
-    if (res.ok) {
-      cookies.set('cartid', newUuid, {
-        httpOnly: false
-      }) 
-    }
-  })
-}
-
-export default Home
