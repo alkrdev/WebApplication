@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }) {
       if (cookieCutter.get('cartid')) return;
       const newUuid = uuidv4();
   
+      console.log("BEFORE FETCHING")
       fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
         method: "POST",
         headers: {
