@@ -47,7 +47,7 @@ export default function FilterList(props) {
     const [items, setItems] = useState([])
 
     useEffect(() => {
-        fetch("http://192.168.1.144:3002/items")
+        fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/items/")
             .then(res => res.json())
             .then(json => setItems(json))
     }, [])

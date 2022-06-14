@@ -3,10 +3,7 @@ import { ShoppingBagIcon } from '@heroicons/react/outline'
 
 import Link from "next/link"
 
-const Cart = ({ items }) => {
-    const [amount, setAmount] = useState(0)
-
-
+const CartButton = ({ items }) => {
     return (
         <div className="flow-root ml-4 lg:ml-6">
             <Link href="/cart">
@@ -23,4 +20,4 @@ const Cart = ({ items }) => {
     )
 }
 
-export default Cart;
+export default CartButton;

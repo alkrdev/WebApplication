@@ -1,5 +1,5 @@
 import React from "react"
-import Cart from "./Cart"
+import CartButton from "./CartButton"
 
 const Nav = ({cartItems}) => {
 
@@ -10,7 +10,7 @@ const Nav = ({cartItems}) => {
                     <span className="self-center text-xl font-semibold whitespace-nowrap text-white">Knudsen Krudt</span>
                 </a>
 
-                <Cart items={cartItems}/>
+                <CartButton items={cartItems}/>
             </div>
         </nav>
     )

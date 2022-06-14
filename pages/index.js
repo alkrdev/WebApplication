@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 import React, { useEffect, useState } from "react"
 import cookieCutter from "cookie-cutter"
+import { v4 as uuidv4 } from 'uuid';
 
 import Nav from "./../components/Nav"
 import FilterList from "./../components/FilterList"
@@ -15,10 +16,24 @@ export default function Home() {
       var id = cookieCutter.get('cartid')
 
       if (id !== undefined) {
-        fetch("http://192.168.1.144:3002/carts/" + id)
+        fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/" + id)
           .then(async res => {
             if (res.status == 401) {
-              // DO SOMETHING, OTHER THAN NOTHING
+              const newUuid = uuidv4();
+  
+              fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/", {
+                method: "POST",
+                headers: {
+                  "Content-type": "application/json",
+                },
+                body: JSON.stringify({
+                  id: newUuid
+                })
+              }).then((res) => {
+                if (res.ok) {
+                  cookieCutter.set('cartid', newUuid) 
+                }
+              })
             } else {
               var json = await res.json()                    
               setCartItems(json.content)
