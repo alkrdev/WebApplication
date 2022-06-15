@@ -1,6 +1,6 @@
 import cookieCutter from "cookie-cutter"
 
-export default function Products({ products, mainprops }) {
+export default function Products({ filtersApplied, products, mainprops }) {
     const AddProductToCart = (product) => {
         
         if (!mainprops.cartItems.some(item => item.id == product.id)) {
@@ -28,7 +28,14 @@ export default function Products({ products, mainprops }) {
             <div className="max-w-2xl mx-auto py-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
   
                 <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                    {products.map((product) => (
+                    {products.filter(pro => {
+                        var hasFilters = filtersApplied.color.length > 0 && filtersApplied.category.length > 0
+                        if (!hasFilters) return true;
+
+                        var hasColor = filtersApplied.color.includes(pro.color)
+                        var hasCategory = filtersApplied.category.includes(pro.category)
+                        return hasColor || hasCategory
+                    }).map((product) => (
                         <div key={product.id} className="group relative hover:bg-green-200 cursor-pointer" onClick={() => AddProductToCart(product)}>
                             <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 overflow-hidden  group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                 <img
