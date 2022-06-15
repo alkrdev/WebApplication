@@ -33,10 +33,8 @@ export default function Home() {
 
 
   useEffect(() => {
-
     var id = cookieCutter.get('cartid')
 
-    console.log(id)
     if (!id) {      
       CreateAndRegisterNewCartID()
     }

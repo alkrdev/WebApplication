@@ -8,7 +8,6 @@ export default function Products({ filtersApplied, products, mainprops }) {
         
             mainprops.setCartItems(newContent)
             
-            console.log(newContent)
             var id = cookieCutter.get('cartid')
             fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/" + id, {
                 method: "PUT",
@@ -32,12 +31,9 @@ export default function Products({ filtersApplied, products, mainprops }) {
                         var hasFilters = filtersApplied.color.length > 0 || filtersApplied.category.length > 0
                         if (!hasFilters) return true;
 
-                        console.log("HAS FILTERS", hasFilters)
-
                         var hasColor = filtersApplied.color.includes(pro.color)
                         var hasCategory = filtersApplied.category.includes(pro.category)
-                        console.log("HAS COLOR", hasColor)
-                        console.log("HAS CATEGORY", hasCategory)
+
                         return hasColor || hasCategory
                     }).map((product) => (
                         <div key={product.id} className="group relative hover:bg-green-200 cursor-pointer" onClick={() => AddProductToCart(product)}>

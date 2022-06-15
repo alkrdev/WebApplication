@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import AmountCounter from '../components/AmountCounter'
 
 export default function Cart() {
-    const [cartProducts, setCartProducts] = useState()
+    const [cartProducts, setCartProducts] = useState([])
     const [fullPrice, setFullPrice] = useState();
     const router = useRouter()
 
@@ -67,7 +67,7 @@ export default function Cart() {
                     }
                 })
         } else {            
-            router.back();
+            router.push("/")
         }
 
     }, [])
