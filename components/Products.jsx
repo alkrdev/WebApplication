@@ -29,7 +29,7 @@ export default function Products({ filtersApplied, products, mainprops }) {
   
                 <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {products.filter(pro => {
-                        var hasFilters = filtersApplied.color.length > 0 && filtersApplied.category.length > 0
+                        var hasFilters = filtersApplied.color.length > 0 || filtersApplied.category.length > 0
                         if (!hasFilters) return true;
 
                         console.log("HAS FILTERS", hasFilters)
