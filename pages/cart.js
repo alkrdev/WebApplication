@@ -8,6 +8,7 @@ import AmountCounter from '../components/AmountCounter'
 
 export default function Cart() {
     const [cartProducts, setCartProducts] = useState()
+    const [fullPrice, setFullPrice] = useState();
     const router = useRouter()
 
     const DeleteProductFromCart = (elm) => {
@@ -22,10 +23,13 @@ export default function Cart() {
             headers: {
                 "Content-type": "application/json"
             },
+
             body: JSON.stringify({
                 items: cartProducts
             })      
         })
+
+        setFullPrice(cartProducts.reduce((prev, curr) => prev + (curr.amount * curr.price), 0))
     }, [cartProducts])
 
     const inc = (pro) => {
@@ -71,12 +75,14 @@ export default function Cart() {
     return (
         <div className="bg-white">
             <div className="max-w-2xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
+                <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Indkøbskurv</h1>
                 <form className="mt-12 lg:grid lg:grid-cols-12 lg:gap-x-12 lg:items-start xl:gap-x-16">
                     <section aria-labelledby="cart-heading" className="lg:col-span-7">
                         <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
-                        {cartProducts ? cartProducts.map((product) => (
-                            <li key={product.id} className="flex py-6 sm:py-10">
+                        {cartProducts ? cartProducts.map((product) => {                      
+                            var capitalizedColor = product.color.charAt(0).toUpperCase() + product.color.slice(1)
+                            var capitalizedCategory = product.category.charAt(0).toUpperCase() + product.category.slice(1)
+                            return <li key={product.id} className="flex py-6 sm:py-10">
                                 <div className="flex-shrink-0">
                                     <img
                                         src={product.imageSrc}
@@ -94,12 +100,12 @@ export default function Cart() {
                                             </h3>
                                         </div>
                                         <div className="mt-1 flex text-sm">
-                                            <p className="text-gray-500">{product.color}</p>
-                                            {product.category ? (
-                                                <p className="ml-4 pl-4 border-l border-gray-200 text-gray-500">{product.category}</p>
+                                            <p className="text-gray-500">{capitalizedColor}</p>
+                                            {capitalizedCategory ? (
+                                                <p className="ml-4 pl-4 border-l border-gray-200 text-gray-500">{capitalizedCategory}</p>
                                             ) : null}
                                         </div>
-                                        <p className="mt-1 text-sm font-medium text-gray-900">{product.price}</p>
+                                        <p className="mt-1 text-sm font-medium text-gray-900">kr. {product.price},-</p>
                                     </div>
 
                                     <div className="mt-4 sm:mt-0 sm:pr-9">
@@ -125,7 +131,7 @@ export default function Cart() {
                                     </p>
                                 </div>
                             </li>
-                        )) : <></>}
+                        }) : <></>}
                         </ul>
                     </section>
 
@@ -135,25 +141,21 @@ export default function Cart() {
                         className="mt-16 bg-gray-50 rounded-lg px-4 py-6 sm:p-6 lg:p-8 lg:mt-0 lg:col-span-5"
                     >
                         <h2 id="summary-heading" className="text-lg font-medium text-gray-900">
-                        Order summary
+                            Købsoversigt
                         </h2>
 
                         <dl className="mt-6 space-y-4">
                             <div className="flex items-center justify-between">
                                 <dt className="text-sm text-gray-600">Subtotal</dt>
-                                <dd className="text-sm font-medium text-gray-900">$99.00</dd>
+                                <dd className="text-sm font-medium text-gray-900">kr. {fullPrice * 0.8},-</dd>
                             </div>
                             <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                                <dt className="flex items-center text-sm text-gray-600">Shipping estimate</dt>
-                                <dd className="text-sm font-medium text-gray-900">$5.00</dd>
+                                <dt className="flex text-sm text-gray-600">Moms</dt>
+                                <dd className="text-sm font-medium text-gray-900">kr. {fullPrice * 0.2},-</dd>
                             </div>
                             <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                                <dt className="flex text-sm text-gray-600">Tax estimate</dt>
-                                <dd className="text-sm font-medium text-gray-900">$8.32</dd>
-                            </div>
-                            <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-                                <dt className="text-base font-medium text-gray-900">Order total</dt>
-                                <dd className="text-base font-medium text-gray-900">$112.32</dd>
+                                <dt className="text-base font-medium text-gray-900">Total med moms</dt>
+                                <dd className="text-base font-medium text-gray-900">kr. {fullPrice},-</dd>
                             </div>
                         </dl>
 
@@ -162,7 +164,7 @@ export default function Cart() {
                                 type="submit"
                                 className="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
                             >
-                                Checkout
+                                Gå til betaling
                             </button>
                         </div>
 
