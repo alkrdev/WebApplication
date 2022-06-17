@@ -11,12 +11,7 @@ export default function Cart() {
     const [fullPrice, setFullPrice] = useState();
     const router = useRouter()
 
-    const DeleteProductFromCart = (elm) => {
-        var newContent = cartProducts.filter(p => p.id !== elm.id)
-        setCartProducts(newContent)
-    }
-
-    useEffect(() => {
+    const UpdateCart = () => {
         var id = cookieCutter.get('cartid')
         fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/" + id, {
             method: "PUT", // SHOULD USE DELETE METHOD
@@ -28,29 +23,42 @@ export default function Cart() {
                 items: cartProducts
             })      
         })
+    }
 
+    const DeleteProductFromCart = (elm) => {
+        var newContent = cartProducts.filter(p => p.id !== elm.id)
+        setCartProducts(newContent)
+    }
+
+    useEffect(() => {
         setFullPrice(cartProducts.reduce((prev, curr) => prev + (curr.amount * curr.price), 0))
     }, [cartProducts])
 
     const inc = (pro) => {
-        setCartProducts(cartProducts.map(pr => {
+        var newCart = cartProducts.map(pr => {
             if (pr.id === pro.id) {
                 pr.amount++;
             }
 
             return pr
-        }))
+        })
+        
+        setCartProducts(newCart)
+        UpdateCart(newCart)
     }
 
     const dec = (pro) => {
         if (pro.amount < 2) return;
-        setCartProducts(cartProducts.map(pr => {
+        var newCart = cartProducts.map(pr => {
             if (pr.id === pro.id) {
                 pr.amount--;
             }
 
             return pr
-        }))
+        })
+        
+        setCartProducts(newCart)
+        UpdateCart(newCart)
     }
 
     useEffect(() => {        
