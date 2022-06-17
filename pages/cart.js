@@ -172,7 +172,7 @@ export default function Cart() {
                         <div className="mt-6 text-sm text-center">
                             <p>
                                 eller{' '}
-                                <a href="#" className="text-indigo-600 font-medium hover:text-indigo-500">
+                                <a href="#" className="text-indigo-600 font-medium hover:text-indigo-500" onClick={() => router.push("/")}>
                                 fortsæt med at vælge produkter<span aria-hidden="true"> &larr;</span>
                                 </a>
                             </p>
