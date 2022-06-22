@@ -27,7 +27,7 @@ export default function Cart() {
 
     const DeleteProductFromCart = (elm) => {
         var newContent = cartProducts.filter(p => p.id !== elm.id)
-        UpdateCart()
+        UpdateCart(newContent)
         setCartProducts(newContent)
     }
 
