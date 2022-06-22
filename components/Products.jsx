@@ -45,7 +45,7 @@ export default function Products({ filtersApplied, products, mainprops }) {
                         return hasColor || hasCategory
                     }).map((product) => (
                         <div key={product.id} className="group relative transition hover:bg-green-100 cursor-pointer divide-y-[1px] border-2" onClick={() => AddProductToCart(product)}>
-                            <div className="w-full min-h-80 aspect-w-1 aspect-h-1 overflow-hidden  group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                            <div className="w-full min-h-52 aspect-w-1 aspect-h-1 overflow-hidden  group-hover:opacity-75 lg:h-52 lg:aspect-none">
                                 <img
                                     src={product.imageSrc}
                                     alt={product.imageAlt}
