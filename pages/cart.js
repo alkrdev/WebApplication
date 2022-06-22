@@ -11,7 +11,7 @@ export default function Cart() {
     const [fullPrice, setFullPrice] = useState();
     const router = useRouter()
 
-    const UpdateCart = () => {
+    const UpdateCart = (newContent) => {
         var id = cookieCutter.get('cartid')
         fetch(process.env.NEXT_PUBLIC_WEB_SERVER + "/carts/" + id, {
             method: "PUT", // SHOULD USE DELETE METHOD
@@ -20,7 +20,7 @@ export default function Cart() {
             },
 
             body: JSON.stringify({
-                items: cartProducts
+                items: newContent ?? cartProducts
             })      
         })
     }
