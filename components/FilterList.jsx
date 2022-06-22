@@ -177,7 +177,7 @@ export default function FilterList(props) {
                     </form>
 
                     <div className="lg:col-span-3">
-                        <div className="border-4 lg:h-full">
+                        <div className="lg:h-full">
                             <Products filtersApplied={filtersApplied} products={items} mainprops={props} />
                         </div>
                     </div>
