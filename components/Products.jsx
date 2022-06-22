@@ -1,5 +1,8 @@
 import cookieCutter from "cookie-cutter"
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Products({ filtersApplied, products, mainprops }) {
     const AddProductToCart = (product) => {
         
@@ -18,6 +21,11 @@ export default function Products({ filtersApplied, products, mainprops }) {
                     items: newContent
                 })      
             })
+                .then(() => {
+                    toast.success("Vare tilføjet!")
+                })
+        } else {            
+            toast.info("Vare er allerede i kurv!")
         }
         
     }
@@ -60,6 +68,17 @@ export default function Products({ filtersApplied, products, mainprops }) {
                     ))}
                 </div>
             </div>
+            <ToastContainer  
+                position="bottom-right"
+                autoClose={1500}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover
+            />
         </div>
     )
 }
