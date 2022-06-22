@@ -52,7 +52,7 @@ export default function Products({ filtersApplied, products, mainprops }) {
                                     className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                                 />
                             </div>
-                            <div className="mt-4 flex justify-between">
+                            <div className="mt-4 flex justify-between p-1 divide-y-[1px]">
                                 <div>
                                     <h3 className="text-sm text-gray-700">
                                         <a href={product.href}>
