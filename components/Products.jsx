@@ -44,7 +44,7 @@ export default function Products({ filtersApplied, products, mainprops }) {
 
                         return hasColor || hasCategory
                     }).map((product) => (
-                        <div key={product.id} className="group relative hover:bg-green-200 cursor-pointer" onClick={() => AddProductToCart(product)}>
+                        <div key={product.id} className="group relative hover:bg-green-200 cursor-pointer divide-y-[1px]" onClick={() => AddProductToCart(product)}>
                             <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 overflow-hidden  group-hover:opacity-75 lg:h-80 lg:aspect-none">
                                 <img
                                     src={product.imageSrc}
@@ -52,7 +52,7 @@ export default function Products({ filtersApplied, products, mainprops }) {
                                     className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                                 />
                             </div>
-                            <div className="mt-4 flex justify-between p-1 divide-y-[1px]">
+                            <div className="mt-4 flex justify-between p-1">
                                 <div>
                                     <h3 className="text-sm text-gray-700">
                                         <a href={product.href}>
